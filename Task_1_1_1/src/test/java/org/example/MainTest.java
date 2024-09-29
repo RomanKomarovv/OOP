@@ -6,9 +6,17 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 public class MainTest {
 
     @Test
-    public void testHeapsort() {
+    public void testReverseArray() {
         int[] array = {5, 4, 3, 2, 1};
         int[] expected = {1, 2, 3, 4, 5};
+        Main.heapsort(array);
+        assertArrayEquals(expected, array);
+    }
+
+    @Test
+    public void testHeapsort() {
+        int[] array = {8, 3, 1, 9, 6};
+        int[] expected = {1, 3, 6, 8, 9};
         Main.heapsort(array);
         assertArrayEquals(expected, array);
     }
@@ -39,8 +47,8 @@ public class MainTest {
 
     @Test
     public void testDuplicatesInArray() {
-        int[] array = {9, 9, 8, 9};
-        int[] expected = {8, 9, 9, 9};
+        int[] array = {9, 9, 8, 9, 8};
+        int[] expected = {8, 8, 9, 9, 9};
         Main.heapsort(array);
         assertArrayEquals(expected, array);
     }
