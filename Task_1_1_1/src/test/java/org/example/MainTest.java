@@ -1,7 +1,7 @@
 package org.example;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MainTest {
 
@@ -83,5 +83,11 @@ public class MainTest {
         int[] expArr = new int[]{1, 2, 2, 4, 5, 5, 7};
         Main.heapsort(testArr);
         assertArrayEquals(expArr, testArr);
+    }
+
+    @Test
+    void testMainClass(){
+        Main.main(null);
+        assertTrue(true);
     }
 }
