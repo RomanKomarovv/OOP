@@ -57,7 +57,7 @@ public class MainTest {
     public void testBigArray() {
         int[] array = {18, 743, 900, 45, 52, 500, 337, 4, 1, 932,
                        774, 295, 199, 309, 501, 604, 22, 10};
-        
+
         int[] expected = {1, 4, 10, 18, 22, 45, 52, 199, 295, 309,
                           337, 500, 501, 604, 743, 774, 900, 932};
         Main.heapsort(array);
@@ -71,6 +71,42 @@ public class MainTest {
 
         int[] expected = {-78999, -52000, -9909, -7743, -344, -8, -2, 1,
                            33, 200, 5555, 10000, 32455, 45005, 99999};
+        Main.heapsort(array);
+        assertArrayEquals(expected, array);
+    }
+
+    @Test
+    public void test9() {
+        int[] array = {52, 52, 52, 52, 52, -52, -52, -52, -52, -52};
+
+        int[] expected = {-52, -52, -52, -52, -52, 52, 52, 52, 52, 52};
+        Main.heapsort(array);
+        assertArrayEquals(expected, array);
+    }
+
+    @Test
+    public void test10() {
+        int[] array = {9, 9, 9, 9, 9, 9, 9, 9, 9, 9};
+
+        int[] expected = {9, 9, 9, 9, 9, 9, 9, 9, 9, 9};
+        Main.heapsort(array);
+        assertArrayEquals(expected, array);
+    }
+
+    @Test
+    public void test11() {
+        int[] array = {-1, -2, -3, -4, -5, -6, -7, -8};
+
+        int[] expected = {-8, -7, -6, -5, -4, -3, -2, -1};
+        Main.heapsort(array);
+        assertArrayEquals(expected, array);
+    }
+
+    @Test
+    public void test12() {
+        int[] array = {5, 5, 5, 5, 5, 2, 2, 2, 2, 2};
+
+        int[] expected = {2, 2, 2, 2, 2, 5, 5, 5, 5, 5};
         Main.heapsort(array);
         assertArrayEquals(expected, array);
     }
