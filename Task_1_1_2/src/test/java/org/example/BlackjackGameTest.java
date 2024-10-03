@@ -21,6 +21,7 @@ class BlackjackGameTest {
         aceOfSpades = new Card(0, 0);
         tenOfHearts = new Card(2, 9);
         queenOfClubs = new Card(1, 11);
+        nineOfHearts = new Card(2, 8);
     }
 
     @Test
