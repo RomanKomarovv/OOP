@@ -86,4 +86,47 @@ class BlackjackGameTest {
 
         assertEquals(player.calculatePoints(), dealer.calculatePoints());
     }
+
+    @Test
+    void testCalculatePointsAceAsOne() {
+        player.addCardToHand(aceOfSpades);
+        player.addCardToHand(tenOfHearts);
+        player.addCardToHand(queenOfClubs);
+        assertEquals(21, player.calculatePoints());
+    }
+
+    @Test
+    void testCalculatePointsWithNoCards() {
+        assertEquals(0, player.calculatePoints());
+    }
+
+    @Test
+    void testCalculatePointsMaxWithoutAces() {
+        player.addCardToHand(queenOfClubs);
+        player.addCardToHand(tenOfHearts);
+        player.addCardToHand(nineOfHearts);
+        assertEquals(29, player.calculatePoints());
+    }
+
+    @Test
+    void testDrawCard() {
+        DeckOfCards deck = new DeckOfCards();
+        deck.shuffleDeck();
+        player.addCardToHand(deck.cards.get(deck.cards.size() - 1));
+        assertEquals(1, player.hand.size());
+    }
+
+    @Test
+    void testDealerHandHiddenCard() {
+        dealer.addCardToHand(tenOfHearts);
+        dealer.addCardToHand(aceOfSpades);
+        dealer.displayHand(true, false);
+    }
+
+    @Test
+    void testAddCardToEmptyHand() {
+        assertEquals(0, player.hand.size());
+        player.addCardToHand(aceOfSpades);
+        assertEquals(1, player.hand.size());
+    }
 }
