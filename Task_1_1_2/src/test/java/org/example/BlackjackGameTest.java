@@ -38,13 +38,13 @@ class BlackjackGameTest {
         assertEquals(21, player.calculatePoints());
     }
 
-//    @Test
-//    void testCalculatePointsWithMultipleAces() {
-//        player.addCardToHand(aceOfSpades);
-//        player.addCardToHand(nineOfHearts);
-//        player.addCardToHand(aceOfSpades);
-//        assertEquals(21, player.calculatePoints());
-//    }
+    @Test
+    void testCalculatePointsWithMultipleAces() {
+        player.addCardToHand(aceOfSpades);
+        player.addCardToHand(nineOfHearts);
+        player.addCardToHand(aceOfSpades);
+        assertEquals(21, player.calculatePoints());
+    }
 //
 //    @Test
 //    void testCalculatePointsOver21() {
