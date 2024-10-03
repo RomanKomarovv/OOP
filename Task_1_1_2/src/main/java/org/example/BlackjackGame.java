@@ -53,7 +53,8 @@ public class BlackjackGame {
         return sc.nextInt();
     }
 
-    public void playRound(boolean testMode, boolean autoPlay) {
+    public void playRound(boolean testMode,
+                          boolean autoPlay) {
         if (totalRounds <= 1) {
             System.out.println("Welcome to Blackjack!");
         } else {
@@ -123,7 +124,8 @@ public class BlackjackGame {
             boolean first = true;
             while (first || dealer.calculatePoints() < 17) {
                 Card dealerCard = drawCard(dealer, deck);
-                boolean overLimit = ((player.calculatePoints() + dealerCard.getCardPoints(false)) > 21);
+                boolean overLimit = ((player.calculatePoints() +
+                        dealerCard.getCardPoints(false)) > 21);
 
                 if (first) {
                     System.out.print("Dealer reveals the hidden card ");
@@ -140,7 +142,8 @@ public class BlackjackGame {
                 first = false;
             }
 
-            if (dealer.calculatePoints() > 21 || (player.calculatePoints() > dealer.calculatePoints())) {
+            if (dealer.calculatePoints() > 21 ||
+                    (player.calculatePoints() > dealer.calculatePoints())) {
                 playerScore++;
                 System.out.print("You won! ");
             } else if (player.calculatePoints() == dealer.calculatePoints()) {
@@ -221,7 +224,8 @@ class Card {
     }
 
     enum Rank {
-        Ace, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King
+        Ace, Two, Three, Four, Five, Six, Seven,
+        Eight, Nine, Ten, Jack, Queen, King
     }
 
     Suit suit;

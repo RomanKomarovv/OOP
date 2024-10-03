@@ -57,8 +57,6 @@ class BlackjackGameTest {
         player.addCardToHand(aceOfSpades);
         player.addCardToHand(tenOfHearts);
         player.displayHand(false, true);
-        // This will print the player's hand to the console.
-        // You can verify the console output if needed.
     }
 
     @Test
