@@ -44,7 +44,7 @@ public class BlackjackGame {
      * @param deck       The deck of cards from which to draw.
      * @return The drawn card, or null if the deck is empty.
      */
-    private Card drawCard(Player participant, DeckOfCards deck) {
+    public Card drawCard(Player participant, DeckOfCards deck) {
         Card currentCard;
         try {
             currentCard = deck.cards.remove(deck.cards.size() - 1);
