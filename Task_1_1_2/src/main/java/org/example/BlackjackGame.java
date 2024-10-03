@@ -366,18 +366,22 @@ class Player {
 
     public int calculatePoints() {
         int points = 0;
+        int aceCount = 0;
 
         for (Card card : hand) {
-            points += card.getCardPoints(false);
+            int cardPoints = card.getCardPoints(false);
+            if (cardPoints == 11) {
+                aceCount++;
+            }
+            points += cardPoints;
         }
 
-        if (points > 21) {
-            points = 0;
-            for (Card card : hand) {
-                points += card.getCardPoints(true);
-            }
+        while (points > 21 && aceCount > 0) {
+            points -= 10;
+            aceCount--;
         }
 
         return points;
     }
 }
+
