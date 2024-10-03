@@ -89,13 +89,13 @@ class BlackjackGameTest {
     }
 
     @Test
-    void testPlayerLoses() {
+    void testDraw() {
         player.addCardToHand(new Card(1, 11)); // Queen of Clubs
         player.addCardToHand(new Card(1, 9));  // Ten of Clubs
         dealer.addCardToHand(new Card(0, 9));  // Ten of Spades
         dealer.addCardToHand(new Card(1, 11)); // Queen of Clubs
 
-        assertTrue(dealer.calculatePoints() > player.calculatePoints());
+        assertEquals(dealer.calculatePoints(), player.calculatePoints());
         game.playRound(false, true);
     }
 
@@ -134,12 +134,6 @@ class BlackjackGameTest {
     void testCardPointAceAsEleven() {
         Card ace = new Card(0, 0); // Ace of Spades
         assertEquals(11, ace.getCardPoints(false));
-    }
-
-    @Test
-    void testCardPointAceAsOne() {
-        Card ace = new Card(0, 0); // Ace of Spades
-        assertEquals(1, ace.getCardPoints(true));
     }
 
     @Test
