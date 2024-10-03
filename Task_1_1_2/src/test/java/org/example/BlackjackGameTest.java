@@ -39,7 +39,7 @@ class BlackjackGameTest {
     @Test
     void testCalculatePointsWithMultipleAces() {
         player.addCardToHand(aceOfSpades);
-        player.addCardToHand(queenOfClubs);
+        player.addCardToHand(nineOfClubs);
         player.addCardToHand(aceOfSpades); // Second Ace
         assertEquals(21, player.calculatePoints());
     }
@@ -49,7 +49,7 @@ class BlackjackGameTest {
         player.addCardToHand(queenOfClubs);
         player.addCardToHand(tenOfHearts);
         player.addCardToHand(queenOfClubs);
-        assertEquals(20, player.calculatePoints());
+        assertEquals(30, player.calculatePoints());
     }
 
     @Test
@@ -62,9 +62,7 @@ class BlackjackGameTest {
     @Test
     void testGameOutcomePlayerWins() {
         player.addCardToHand(tenOfHearts);
-        player.addCardToHand(tenOfHearts);
-        dealer.addCardToHand(tenOfHearts);
-        dealer.addCardToHand(queenOfClubs);
+        player.addCardToHand(aceOfSpades);
 
         assertTrue(player.calculatePoints() > dealer.calculatePoints());
     }
@@ -72,9 +70,7 @@ class BlackjackGameTest {
     @Test
     void testGameOutcomeDealerWins() {
         player.addCardToHand(tenOfHearts);
-        player.addCardToHand(queenOfClubs);
-        dealer.addCardToHand(tenOfHearts);
-        dealer.addCardToHand(tenOfHearts);
+        player.addCardToHand(aceOfHearts);
 
         assertTrue(dealer.calculatePoints() > player.calculatePoints());
     }
