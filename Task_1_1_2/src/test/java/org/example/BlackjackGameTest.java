@@ -12,6 +12,7 @@ class BlackjackGameTest {
     Card aceOfSpades;
     Card tenOfHearts;
     Card queenOfClubs;
+    Card queenOfHearts;
     Card nineOfHearts;
 
     @BeforeEach
@@ -21,6 +22,7 @@ class BlackjackGameTest {
         aceOfSpades = new Card(0, 0);
         tenOfHearts = new Card(2, 9);
         queenOfClubs = new Card(1, 11);
+        queenOfClubs = new Card(2, 11);
         nineOfHearts = new Card(2, 8);
     }
 
@@ -50,7 +52,7 @@ class BlackjackGameTest {
     void testCalculatePointsOver21() {
         player.addCardToHand(queenOfClubs);
         player.addCardToHand(tenOfHearts);
-        player.addCardToHand(queenOfClubs);
+        player.addCardToHand(queenOfHearts);
         assertEquals(30, player.calculatePoints());
     }
 
