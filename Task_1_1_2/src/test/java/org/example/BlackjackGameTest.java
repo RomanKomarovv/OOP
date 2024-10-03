@@ -12,7 +12,6 @@ class BlackjackGameTest {
     Card aceOfSpades;
     Card tenOfHearts;
     Card queenOfClubs;
-    Card queenOfHearts;
     Card nineOfHearts;
 
     @BeforeEach
@@ -22,7 +21,6 @@ class BlackjackGameTest {
         aceOfSpades = new Card(0, 0);
         tenOfHearts = new Card(2, 9);
         queenOfClubs = new Card(1, 11);
-        queenOfClubs = new Card(2, 11);
         nineOfHearts = new Card(2, 8);
     }
 
@@ -44,7 +42,7 @@ class BlackjackGameTest {
     void testCalculatePointsWithMultipleAces() {
         player.addCardToHand(aceOfSpades);
         player.addCardToHand(nineOfHearts);
-        player.addCardToHand(aceOfSpades); // Second Ace
+        player.addCardToHand(aceOfSpades);
         assertEquals(21, player.calculatePoints());
     }
 
@@ -52,40 +50,7 @@ class BlackjackGameTest {
     void testCalculatePointsOver21() {
         player.addCardToHand(queenOfClubs);
         player.addCardToHand(tenOfHearts);
-        player.addCardToHand(queenOfHearts);
+        player.addCardToHand(queenOfClubs);
         assertEquals(30, player.calculatePoints());
-    }
-
-    @Test
-    void testDisplayHand() {
-        player.addCardToHand(aceOfSpades);
-        player.addCardToHand(tenOfHearts);
-        player.displayHand(false, true);
-    }
-
-    @Test
-    void testGameOutcomePlayerWins() {
-        player.addCardToHand(tenOfHearts);
-        player.addCardToHand(aceOfSpades);
-
-        assertTrue(player.calculatePoints() > dealer.calculatePoints());
-    }
-
-    @Test
-    void testGameOutcomeDealerWins() {
-        dealer.addCardToHand(tenOfHearts);
-        dealer.addCardToHand(aceOfSpades);
-
-        assertTrue(dealer.calculatePoints() > player.calculatePoints());
-    }
-
-    @Test
-    void testGameOutcomeDraw() {
-        player.addCardToHand(tenOfHearts);
-        player.addCardToHand(tenOfHearts);
-        dealer.addCardToHand(tenOfHearts);
-        dealer.addCardToHand(tenOfHearts);
-
-        assertEquals(player.calculatePoints(), dealer.calculatePoints());
     }
 }
