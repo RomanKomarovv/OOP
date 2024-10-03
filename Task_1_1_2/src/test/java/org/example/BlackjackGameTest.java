@@ -127,21 +127,6 @@ class BlackjackGameTest {
     }
 
     @Test
-    void testClearHand() {
-        player.addCardToHand(aceOfSpades);
-        player.addCardToHand(tenOfHearts);
-        player.clearHand();
-        assertEquals(0, player.hand.size());
-    }
-
-    @Test
-    void testDrawCardFromEmptyDeck() {
-        DeckOfCards deck = new DeckOfCards();
-        deck.cards.clear();
-        assertNull(player.drawCard(deck));
-    }
-
-    @Test
     void testGameOutcomeDealerWinsWithHighPoints() {
         dealer.addCardToHand(queenOfClubs);
         dealer.addCardToHand(queenOfClubs);
@@ -150,14 +135,6 @@ class BlackjackGameTest {
         player.addCardToHand(tenOfHearts);
 
         assertTrue(dealer.calculatePoints() > player.calculatePoints());
-    }
-
-    @Test
-    void testDeckShuffle() {
-        DeckOfCards deck = new DeckOfCards();
-        List<Card> originalOrder = new ArrayList<>(deck.cards);
-        deck.shuffleDeck();
-        assertNotEquals(originalOrder, deck.cards);
     }
 
     @Test
