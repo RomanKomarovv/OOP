@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * The main game of Blackjack
+ */
 public class BlackjackGame {
     Player player;
     Player dealer;
@@ -19,6 +22,9 @@ public class BlackjackGame {
 
     Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Initializws the Blackjack game instance, creating players and shuffling the deck.
+     */
     public BlackjackGame() {
         player = new Player();
         dealer = new Player();
@@ -32,6 +38,13 @@ public class BlackjackGame {
         totalRounds = 1;
     }
 
+    /**
+     * Draws a card from the deck and adds it to the participant's hand.
+     *
+     * @param participant The player or dealer drawing the card.
+     * @param deck       The deck of cards from which to draw.
+     * @return The drawn card, or null if the deck is empty.
+     */
     private Card drawCard(Player participant, DeckOfCards deck) {
         Card currentCard;
         try {
@@ -44,6 +57,13 @@ public class BlackjackGame {
         return currentCard;
     }
 
+    /**
+     * Gets an integer input from the user with a given prompt.
+     *
+     * @param promptText The text to display for input prompt.
+     * @param sc        The scanner used to read user input.
+     * @return The integer input from the user.
+     */
     public int getInputInt(String promptText, Scanner sc) {
         System.out.print(promptText);
         while (!sc.hasNextInt()) {
@@ -53,6 +73,12 @@ public class BlackjackGame {
         return sc.nextInt();
     }
 
+    /**
+     * Plays a round of Blackjack.
+     *
+     * @param testMode Indicates if the game is in test mode.
+     * @param autoPlay Indicates if the game should automatically play.
+     */
     public void playRound(boolean testMode,
                           boolean autoPlay) {
         if (totalRounds <= 1) {
@@ -142,8 +168,8 @@ public class BlackjackGame {
                 first = false;
             }
 
-            if (dealer.calculatePoints() > 21 ||
-                    (player.calculatePoints() > dealer.calculatePoints())) {
+            if (dealer.calculatePoints() > 21
+                    || (player.calculatePoints() > dealer.calculatePoints())) {
                 playerScore++;
                 System.out.print("You won! ");
             } else if (player.calculatePoints() == dealer.calculatePoints()) {
@@ -161,6 +187,12 @@ public class BlackjackGame {
         totalRounds++;
     }
 
+    /**
+     * Starts the game loop, allowing the player to play multiple rounds.
+     *
+     * @param testMode Indicates if the game is in test mode.
+     * @param autoPlay Indicates if the game should automatically play.
+     */
     public void startGame(boolean testMode, boolean autoPlay) {
         while (true) {
             playRound(testMode, autoPlay);
@@ -180,12 +212,20 @@ public class BlackjackGame {
         }
     }
 
+    /**
+     * The entry point of the Blackjack game.
+     *
+     * @param args Command line arguments (not used).
+     */
     public static void main(String[] args) {
         BlackjackGame blackjack = new BlackjackGame();
         blackjack.startGame(false, false);
     }
 }
 
+/**
+ * Represents a deck of cards used in the Blackjack game.
+ */
 class DeckOfCards {
     List<Card> cards;
 
@@ -261,7 +301,8 @@ class Card {
     }
 
     public void printCardDetails(boolean overLimit) {
-        System.out.print(this.rank + " of " + this.suit + " (" + this.getCardPoints(overLimit) + ")");
+        System.out.print(this.rank + " of " + this.suit +
+                " (" + this.getCardPoints(overLimit) + ")");
     }
 }
 
