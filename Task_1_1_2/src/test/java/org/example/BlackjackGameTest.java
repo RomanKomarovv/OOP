@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 class BlackjackGameTest {
     Player player;
     Player dealer;
@@ -65,7 +64,6 @@ class BlackjackGameTest {
     void testGameOutcomePlayerWins() {
         player.addCardToHand(tenOfHearts);
         player.addCardToHand(aceOfSpades);
-
         assertTrue(player.calculatePoints() > dealer.calculatePoints());
     }
 
@@ -73,7 +71,6 @@ class BlackjackGameTest {
     void testGameOutcomeDealerWins() {
         dealer.addCardToHand(tenOfHearts);
         dealer.addCardToHand(aceOfSpades);
-
         assertTrue(dealer.calculatePoints() > player.calculatePoints());
     }
 
@@ -83,7 +80,6 @@ class BlackjackGameTest {
         player.addCardToHand(tenOfHearts);
         dealer.addCardToHand(tenOfHearts);
         dealer.addCardToHand(tenOfHearts);
-
         assertEquals(player.calculatePoints(), dealer.calculatePoints());
     }
 
@@ -128,5 +124,66 @@ class BlackjackGameTest {
         assertEquals(0, player.hand.size());
         player.addCardToHand(aceOfSpades);
         assertEquals(1, player.hand.size());
+    }
+
+    @Test
+    void testClearHand() {
+        player.addCardToHand(aceOfSpades);
+        player.addCardToHand(tenOfHearts);
+        player.clearHand();
+        assertEquals(0, player.hand.size());
+    }
+
+    @Test
+    void testDrawCardFromEmptyDeck() {
+        DeckOfCards deck = new DeckOfCards();
+        deck.cards.clear();
+        assertNull(player.drawCard(deck));
+    }
+
+    @Test
+    void testGameOutcomeDealerWinsWithHighPoints() {
+        dealer.addCardToHand(queenOfClubs);
+        dealer.addCardToHand(queenOfClubs);
+
+        player.addCardToHand(nineOfHearts);
+        player.addCardToHand(tenOfHearts);
+
+        assertTrue(dealer.calculatePoints() > player.calculatePoints());
+    }
+
+    @Test
+    void testDeckShuffle() {
+        DeckOfCards deck = new DeckOfCards();
+        List<Card> originalOrder = new ArrayList<>(deck.cards);
+        deck.shuffleDeck();
+        assertNotEquals(originalOrder, deck.cards);
+    }
+
+    @Test
+    void testCalculatePointsWithMultipleAcesDifferentValues() {
+        player.addCardToHand(aceOfSpades);
+        player.addCardToHand(aceOfSpades);
+        player.addCardToHand(nineOfHearts);
+        assertEquals(21, player.calculatePoints());
+    }
+
+    @Test
+    void testPlayerBusts() {
+        player.addCardToHand(queenOfClubs);
+        player.addCardToHand(queenOfClubs);
+        player.addCardToHand(nineOfHearts);
+        assertTrue(player.calculatePoints() > 21);
+    }
+
+    @Test
+    void testGameOutcomeDrawWithAces() {
+        player.addCardToHand(aceOfSpades);
+        player.addCardToHand(tenOfHearts);
+
+        dealer.addCardToHand(aceOfSpades);
+        dealer.addCardToHand(tenOfHearts);
+
+        assertEquals(player.calculatePoints(), dealer.calculatePoints());
     }
 }
