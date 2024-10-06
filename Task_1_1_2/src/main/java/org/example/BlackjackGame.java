@@ -348,7 +348,7 @@ class Player {
                     }
                 }
             } else if (!hand.isEmpty()) {
-                hand.getFirst().printCardDetails(overLimit);
+                hand.get(0).printCardDetails(overLimit);
                 System.out.print(", <hidden card>");
             }
 
