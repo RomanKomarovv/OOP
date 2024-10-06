@@ -1,8 +1,8 @@
 package org.example;
 
+import java.util.Scanner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.Scanner;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -221,5 +221,12 @@ public class BlackjackGameTest {
 
         Card drawnCard = game.drawCard(player, deck);
         assertNull(drawnCard, "Expected null when drawing from an empty deck");
+    }
+
+    @Test
+    public void testDrawCardFromFullDeck() {
+        // Проверяем, что колода не пуста, когда тянем карту из полной колоды
+        Card drawnCard = game.drawCard(player, deck);
+        assertNotNull(drawnCard, "Expected a valid card from a full deck");
     }
 }

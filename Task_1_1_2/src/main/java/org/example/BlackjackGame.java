@@ -88,9 +88,8 @@ public class BlackjackGame {
 
         // Инициализируем игроков только если не в тестовом режиме и не в автоплей
         if (!testMode && !autoPlay) {
-            // Удаляем инициализацию игроков здесь, поскольку они уже инициализированы в конструкторе
-            // player = new Player();
-            // dealer = new Player();
+            // Удаляем инициализацию игроков здесь,
+            // поскольку они уже инициализированы в конструкторе
 
             if (deck.cards.size() < 52 / 2) {
                 deck = new DeckOfCards();
@@ -152,8 +151,8 @@ public class BlackjackGame {
                 boolean first = true;
                 while (first || dealer.calculatePoints() < 17) {
                     Card dealerCard = drawCard(dealer, deck);
-                    boolean overLimit = ((player.calculatePoints() +
-                            dealerCard.getCardPoints(false)) > 21);
+                    boolean overLimit = ((player.calculatePoints()
+                            + dealerCard.getCardPoints(false)) > 21);
 
                     if (first) {
                         System.out.print("Dealer reveals the hidden card ");
@@ -172,7 +171,8 @@ public class BlackjackGame {
             }
 
             // Условия для определения победителя
-            if (dealer.calculatePoints() > 21 || (player.calculatePoints() > dealer.calculatePoints())) {
+            if (dealer.calculatePoints() > 21
+                    || (player.calculatePoints() > dealer.calculatePoints())) {
                 playerScore++;
                 System.out.print("You won! ");
             } else if (player.calculatePoints() == dealer.calculatePoints()) {
@@ -303,8 +303,8 @@ class Card {
     }
 
     public void printCardDetails(boolean overLimit) {
-        System.out.print(this.rank + " of " + this.suit +
-                " (" + this.getCardPoints(overLimit) + ")");
+        System.out.print(this.rank + " of " + this.suit
+                + " (" + this.getCardPoints(overLimit) + ")");
     }
 }
 
@@ -347,8 +347,8 @@ class Player {
                         System.out.print(", ");
                     }
                 }
-            } else if (hand.size() != 0) {
-                hand.get(0).printCardDetails(overLimit);
+            } else if (!hand.isEmpty()) {
+                hand.getFirst().printCardDetails(overLimit);
                 System.out.print(", <hidden card>");
             }
 
