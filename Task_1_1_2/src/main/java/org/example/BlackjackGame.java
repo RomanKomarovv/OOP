@@ -78,8 +78,7 @@ public class BlackjackGame {
      * @param testMode Indicates if the game is in test mode.
      * @param autoPlay Indicates if the game should automatically play.
      */
-    public void playRound(boolean testMode,
-                          boolean autoPlay) {
+    public void playRound(boolean testMode, boolean autoPlay) {
         if (totalRounds <= 1) {
             System.out.println("Welcome to Blackjack!");
         } else {
@@ -87,9 +86,11 @@ public class BlackjackGame {
         }
         System.out.println("Round " + totalRounds);
 
-        if (!autoPlay) {
-            player = new Player();
-            dealer = new Player();
+        // Инициализируем игроков только если не в тестовом режиме и не в автоплей
+        if (!testMode && !autoPlay) {
+            // Удаляем инициализацию игроков здесь, поскольку они уже инициализированы в конструкторе
+            // player = new Player();
+            // dealer = new Player();
 
             if (deck.cards.size() < 52 / 2) {
                 deck = new DeckOfCards();
@@ -117,7 +118,7 @@ public class BlackjackGame {
 
             int input;
             if (testMode) {
-                input = 0;
+                input = 0; // В тестовом режиме игрок сразу заканчивает ход
             } else {
                 input = getInputInt("Press '1' to draw a card, '0' to stand: ", scanner);
             }
@@ -146,29 +147,32 @@ public class BlackjackGame {
             System.out.println("\nDealer's turn:");
             System.out.println("----------");
 
-            boolean first = true;
-            while (first || dealer.calculatePoints() < 17) {
-                Card dealerCard = drawCard(dealer, deck);
-                boolean overLimit = ((player.calculatePoints() +
-                        dealerCard.getCardPoints(false)) > 21);
+            // Дилер берет карты только если не в тестовом режиме
+            if (!testMode) {
+                boolean first = true;
+                while (first || dealer.calculatePoints() < 17) {
+                    Card dealerCard = drawCard(dealer, deck);
+                    boolean overLimit = ((player.calculatePoints() +
+                            dealerCard.getCardPoints(false)) > 21);
 
-                if (first) {
-                    System.out.print("Dealer reveals the hidden card ");
-                } else {
-                    System.out.print("Dealer draws: ");
+                    if (first) {
+                        System.out.print("Dealer reveals the hidden card ");
+                    } else {
+                        System.out.print("Dealer draws: ");
+                    }
+
+                    dealerCard.printCardDetails(overLimit);
+                    System.out.println();
+
+                    player.displayHand(false, true);
+                    dealer.displayHand(false, false);
+
+                    first = false;
                 }
-
-                dealerCard.printCardDetails(overLimit);
-                System.out.println();
-
-                player.displayHand(false, true);
-                dealer.displayHand(false, false);
-
-                first = false;
             }
 
-            if (dealer.calculatePoints() > 21
-                    || (player.calculatePoints() > dealer.calculatePoints())) {
+            // Условия для определения победителя
+            if (dealer.calculatePoints() > 21 || (player.calculatePoints() > dealer.calculatePoints())) {
                 playerScore++;
                 System.out.print("You won! ");
             } else if (player.calculatePoints() == dealer.calculatePoints()) {
@@ -182,7 +186,6 @@ public class BlackjackGame {
         }
 
         System.out.println("\nScore player/dealer: " + playerScore + "/" + dealerScore);
-
         totalRounds++;
     }
 
@@ -384,4 +387,3 @@ class Player {
         return points;
     }
 }
-

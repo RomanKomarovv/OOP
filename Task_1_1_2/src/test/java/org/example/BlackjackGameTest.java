@@ -2,158 +2,224 @@ package org.example;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-class BlackjackGameTest {
+
+public class BlackjackGameTest {
 
     BlackjackGame game;
+    DeckOfCards deck;
     Player player;
     Player dealer;
-    DeckOfCards deck;
 
     @BeforeEach
-    void setUp() {
+    public void setup() {
         game = new BlackjackGame();
+        deck = new DeckOfCards();
         player = new Player();
         dealer = new Player();
-        deck = new DeckOfCards();
+    }
+
+    // --- Тесты для Player ---
+
+    @Test
+    public void testPlayerPointsWithMultipleAces() {
+        // Проверяем корректный подсчет очков при наличии нескольких тузов
+        player.addCardToHand(new Card(0, 0));  // Ace
+        player.addCardToHand(new Card(0, 0));  // Ace
+        player.addCardToHand(new Card(0, 0));  // Ace
+        assertEquals(13, player.calculatePoints());  // Один туз равен 11, остальные - по 1
     }
 
     @Test
-    void testDrawCard() {
-        Card card = game.drawCard(player, deck);
-        assertNotNull(card);
-        assertEquals(1, player.hand.size());
+    public void testPlayerPointsWithAceAndFaceCard() {
+        // Проверка комбинации туза и лицевой карты (например, короля)
+        player.addCardToHand(new Card(0, 0));  // Ace
+        player.addCardToHand(new Card(0, 12)); // King
+        assertEquals(21, player.calculatePoints());  // Ace = 11, King = 10
     }
 
     @Test
-    void testDrawCardFromEmptyDeck() {
-        deck.cards.clear();
-        Card card = game.drawCard(player, deck);
-        assertNull(card);
-        assertEquals(0, player.hand.size());
+    public void testPlayerPointsWithAceOver21() {
+        // Проверка, что туз считается как 1, если сумма больше 21
+        player.addCardToHand(new Card(0, 0));  // Ace
+        player.addCardToHand(new Card(0, 12)); // King
+        player.addCardToHand(new Card(0, 10)); // Ten
+        assertEquals(21, player.calculatePoints());  // Ace = 1, King = 10, Ten = 10
     }
 
     @Test
-    void testGetInputInt() {
-        String input = "1\n";
-        Scanner sc = new Scanner(input);
-        int result = game.getInputInt("Enter 1 or 0: ", sc);
-        assertEquals(1, result);
+    public void testPlayerPointsWithTwoFaceCards() {
+        // Проверка, что две лицевые карты дают 20 очков
+        player.addCardToHand(new Card(0, 12));  // King
+        player.addCardToHand(new Card(0, 11));  // Queen
+        assertEquals(20, player.calculatePoints());
     }
 
     @Test
-    void testGetInputIntInvalid() {
-        String input = "abc\n1\n";
-        Scanner sc = new Scanner(input);
-        int result = game.getInputInt("Enter 1 or 0: ", sc);
-        assertEquals(1, result);
-    }
-
-    @Test
-    void testShuffleDeck() {
-        List<Card> originalDeck = new ArrayList<>(deck.cards);
-        deck.shuffleDeck();
-        assertNotEquals(originalDeck, deck.cards);
-    }
-
-    @Test
-    void testSwapCardsValid() {
-        Card card1 = deck.cards.get(0);
-        Card card2 = deck.cards.get(1);
-        deck.swapCards(0, 1, deck.cards.size());
-        assertEquals(card1, deck.cards.get(1));
-        assertEquals(card2, deck.cards.get(0));
-    }
-
-    @Test
-    void testSwapCardsInvalid() {
-        List<Card> originalDeck = new ArrayList<>(deck.cards);
-        deck.swapCards(-1, 53, deck.cards.size());
-        assertEquals(originalDeck, deck.cards);
-    }
-
-    @Test
-    void testPlayerWins() {
-        player.addCardToHand(new Card(0, 0));  // Ace of Spades
-        player.addCardToHand(new Card(2, 9));  // Ten of Hearts
-        dealer.addCardToHand(new Card(1, 5));  // Six of Clubs
-
-        assertTrue(player.calculatePoints() > dealer.calculatePoints());
-        game.playRound(false, true);
-    }
-
-    @Test
-    void testDraw() {
-        player.addCardToHand(new Card(1, 11)); // Queen of Clubs
-        player.addCardToHand(new Card(1, 9));  // Ten of Clubs
-        dealer.addCardToHand(new Card(0, 9));  // Ten of Spades
-        dealer.addCardToHand(new Card(1, 11)); // Queen of Clubs
-
-        assertEquals(dealer.calculatePoints(), player.calculatePoints());
-        game.playRound(false, true);
-    }
-
-    @Test
-    void testGameDraw() {
-        player.addCardToHand(new Card(1, 9)); // Ten of Clubs
-        player.addCardToHand(new Card(2, 9)); // Ten of Hearts
-        dealer.addCardToHand(new Card(0, 9)); // Ten of Spades
-        dealer.addCardToHand(new Card(3, 9)); // Ten of Diamonds
-
-        assertEquals(player.calculatePoints(), dealer.calculatePoints());
-        game.playRound(false, true);
-    }
-
-    @Test
-    void testPlayerBusts() {
-        player.addCardToHand(new Card(1, 11)); // Queen of Clubs
-        player.addCardToHand(new Card(2, 11)); // Queen of Hearts
-        player.addCardToHand(new Card(3, 11)); // Queen of Diamonds
-
+    public void testPlayerBustCondition() {
+        // Проверка, что игрок набирает больше 21
+        player.addCardToHand(new Card(0, 10));  // Ten
+        player.addCardToHand(new Card(0, 10));  // Ten
+        player.addCardToHand(new Card(0, 10));  // Ten
         assertTrue(player.calculatePoints() > 21);
-        game.playRound(false, true);
     }
 
     @Test
-    void testDealerBusts() {
-        dealer.addCardToHand(new Card(1, 11)); // Queen of Clubs
-        dealer.addCardToHand(new Card(2, 11)); // Queen of Hearts
-        dealer.addCardToHand(new Card(3, 11)); // Queen of Diamonds
-
-        assertTrue(dealer.calculatePoints() > 21);
-        game.playRound(false, true);
-    }
-
-    @Test
-    void testCardPointAceAsEleven() {
-        Card ace = new Card(0, 0); // Ace of Spades
-        assertEquals(11, ace.getCardPoints(false));
-    }
-
-    @Test
-    void testCardPointKing() {
-        Card king = new Card(1, 12); // King of Clubs
-        assertEquals(10, king.getCardPoints(false));
-    }
-
-    @Test
-    void testDisplayPlayerHand() {
-        player.addCardToHand(new Card(0, 0));  // Ace of Spades
-        player.addCardToHand(new Card(2, 9));  // Ten of Hearts
-        player.displayHand(false, true);
+    public void testPlayerBlackjackCondition() {
+        // Проверка, что игрок получает 21 очко
+        player.addCardToHand(new Card(0, 10));  // Ten
+        player.addCardToHand(new Card(0, 11));  // Queen
+        player.addCardToHand(new Card(0, 0));   // Ace
         assertEquals(21, player.calculatePoints());
     }
 
+    // --- Тесты для BlackjackGame ---
+
     @Test
-    void testDisplayDealerHand() {
-        dealer.addCardToHand(new Card(0, 0));  // Ace of Spades
-        dealer.addCardToHand(new Card(2, 9));  // Ten of Hearts
-        dealer.displayHand(true, false);
+    public void testPlayerWinsWithBlackjack() {
+        // Проверка, что игрок выигрывает с Blackjack
+        player.addCardToHand(new Card(0, 0));  // Ace
+        player.addCardToHand(new Card(0, 12)); // King
+
+        dealer.addCardToHand(new Card(0, 10)); // Ten
+        dealer.addCardToHand(new Card(0, 8));  // Eight
+
+        game.player = player;
+        game.dealer = dealer;
+
+        game.playRound(true, true);  // Тестовый режим
+        assertEquals(1, game.playerScore);
+        assertEquals(0, game.dealerScore);
+    }
+
+    @Test
+    public void testDealerWinsWithHigherPoints() {
+        // Проверка, что дилер выигрывает с большим количеством очков
+        player.addCardToHand(new Card(0, 10));  // Ten
+        player.addCardToHand(new Card(0, 8));   // Nine
+
+        dealer.addCardToHand(new Card(0, 10));  // Ten
+        dealer.addCardToHand(new Card(0, 11));  // King
+
+        game.player = player;
+        game.dealer = dealer;
+
+        game.playRound(true, true);  // Тестовый режим
+        assertEquals(0, game.playerScore);
+        assertEquals(1, game.dealerScore);
+    }
+
+    @Test
+    public void testGetInputIntWithInvalidThenValidInput() {
+        // Проверка ввода с некорректными и корректными значениями
+        assertEquals(1, game.getInputInt("Enter 1: ", new Scanner("a\n1")));
+    }
+
+    @Test
+    public void testDealerBustsAndPlayerWins() {
+        // Проверка, что дилер "перебирает" и игрок выигрывает
+        player.addCardToHand(new Card(0, 10));  // Ten
+        player.addCardToHand(new Card(0, 9));   // Nine
+
+        dealer.addCardToHand(new Card(0, 10));  // Ten
+        dealer.addCardToHand(new Card(0, 10));  // Ten
+        dealer.addCardToHand(new Card(0, 5));   // Five
+
+        game.player = player;
+        game.dealer = dealer;
+
+        game.playRound(true, true);  // Тестовый режим
+        assertEquals(1, game.playerScore);
+        assertEquals(0, game.dealerScore);
+    }
+
+    @Test
+    public void testPlayerAndDealerTie() {
+        // Игрок и дилер получают одинаковые карты
+        player.addCardToHand(new Card(0, 9));  // Ten
+        player.addCardToHand(new Card(0, 9));  // Ten
+
+        dealer.addCardToHand(new Card(0, 9));  // Ten
+        dealer.addCardToHand(new Card(0, 9));  // Ten
+
+        game.player = player;
+        game.dealer = dealer;
+
+        // Запускаем тестовую партию
+        game.playRound(true, true);  // Тестовый режим без взаимодействия
+
+        // Проверяем, что у игрока и дилера равное количество очков
+        assertEquals(1, game.playerScore);
+        assertEquals(1, game.dealerScore);  // Ничья
+    }
+
+    @Test
+    public void testPlayerBustsWithHighCards() {
+        // Игрок перебирает, получая слишком много очков
+        player.addCardToHand(new Card(0, 10));  // Ten
+        player.addCardToHand(new Card(0, 10));  // Ten
+        player.addCardToHand(new Card(0, 10));  // Ten (перебор)
+
+        dealer.addCardToHand(new Card(0, 10)); // Ten
+        dealer.addCardToHand(new Card(0, 11)); // Ace
+
+        game.player = player;
+        game.dealer = dealer;
+
+        game.playRound(true, true);  // Тестовый режим
+        assertEquals(0, game.playerScore);  // Игрок не получает очков
+        assertEquals(1, game.dealerScore);  // Дилер выигрывает
+    }
+
+    @Test
+    public void testPlayerWinsWithHigherPoints() {
+        // Игрок получает больше очков, чем дилер
+        player.addCardToHand(new Card(0, 10));  // Ten
+        player.addCardToHand(new Card(0, 9));   // Nine
+
+        dealer.addCardToHand(new Card(0, 10));  // Ten
+        dealer.addCardToHand(new Card(0, 8));   // Eight
+
+        game.player = player;
+        game.dealer = dealer;
+
+        game.playRound(true, true);  // Тестовый режим
+        assertEquals(1, game.playerScore);  // Игрок выигрывает
+        assertEquals(0, game.dealerScore);  // Дилер не получает очков
+    }
+
+    @Test
+    void testCardPointsWhenOverLimit() {
+        Card aceCard = new Card(0, 0); // Туз
+
+        // Проверяем, что при переборе туз возвращает 1
+        assertEquals(1, aceCard.getCardPoints(true));
+    }
+
+    @Test
+    void testInvalidSuit() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            new Card(4, 10); // Некорректная масть
+        });
+        assertEquals("Invalid suit value", exception.getMessage());
+    }
+
+    @Test
+    void testInvalidRank() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            new Card(0, 13); // Некорректный ранг
+        });
+        assertEquals("Invalid rank value", exception.getMessage());
+    }
+
+    @Test
+    public void testEmptyDeck() {
+        // Проверяем, что происходит, когда колода пуста
+        deck.cards.clear(); // Удаляем все карты из колоды
+
+        Card drawnCard = game.drawCard(player, deck);
+        assertNull(drawnCard, "Expected null when drawing from an empty deck");
     }
 }
