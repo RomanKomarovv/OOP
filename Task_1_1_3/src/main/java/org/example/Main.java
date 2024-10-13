@@ -1,7 +1,8 @@
 package org.example;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * Abstract class representing a mathematical expression.
@@ -217,6 +218,11 @@ class Div extends Expression {
  * Main class for testing mathematical expressions.
  */
 public class Main {
+    /**
+     * Main method for testing the expression evaluation and differentiation.
+     *
+     * @param args command line arguments (not used)
+     */
     public static void main(String[] args) {
         Expression e = new Add(new Number(3), new Mul(new Number(2), new Variable("x")));
         System.out.println("Expression: " + e);
@@ -233,4 +239,3 @@ public class Main {
         System.out.println("Derivative with respect to y: " + deY);
     }
 }
-

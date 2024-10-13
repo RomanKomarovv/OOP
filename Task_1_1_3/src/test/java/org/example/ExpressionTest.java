@@ -3,9 +3,12 @@ package org.example;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
-class ExpressionTests {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+
+class ExpressionTest {
 
     @Test
     void testNumberEvaluation() {
