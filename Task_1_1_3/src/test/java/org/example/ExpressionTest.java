@@ -142,4 +142,15 @@ class ExpressionTest {
         Expression derivative = expr.derivative("x");
         assertEquals("(((1*2)-(x*0))/(2*2))", derivative.toString());
     }
+
+    @Test
+    void testDerivativeWithMultipleVariables() {
+        Expression expr = new Add(new Variable("x"), new Variable("y"));
+        Expression derivativeX = expr.derivative("x");
+        assertEquals("(1+0)", derivativeX.toString());
+
+        Expression derivativeY = expr.derivative("y");
+        assertEquals("(0+1)", derivativeY.toString());
+    }
+
 }
