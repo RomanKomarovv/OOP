@@ -9,20 +9,25 @@ import java.util.HashMap;
 abstract class Expression {
     /**
      * Evaluates the expression with the given variable values.
+     *
      * @param variableValues a map of variable names and their corresponding integer values
+     *
      * @return the result of the evaluation
      */
     public abstract int eval(Map<String, Integer> variableValues);
 
     /**
      * Returns the derivative of the expression with respect to a given variable.
+     *
      * @param variable the variable with respect to which the derivative is taken
+     *
      * @return the derivative of the expression
      */
     public abstract Expression derivative(String variable);
 
     /**
      * Returns the string representation of the expression.
+     *
      * @return the string representation
      */
     public abstract String toString();
@@ -87,7 +92,8 @@ class Variable extends Expression {
  * Class representing the addition of two expressions.
  */
 class Add extends Expression {
-    private final Expression left, right;
+    private final Expression left;
+    private final Expression right;
 
     public Add(Expression left, Expression right) {
         this.left = left;
@@ -114,7 +120,8 @@ class Add extends Expression {
  * Class representing the subtraction of two expressions.
  */
 class Sub extends Expression {
-    private final Expression left, right;
+    private final Expression left;
+    private final Expression right;
 
     public Sub(Expression left, Expression right) {
         this.left = left;
@@ -141,7 +148,8 @@ class Sub extends Expression {
  * Class representing the multiplication of two expressions.
  */
 class Mul extends Expression {
-    private final Expression left, right;
+    private final Expression left;
+    private final Expression right;
 
     public Mul(Expression left, Expression right) {
         this.left = left;
@@ -171,7 +179,8 @@ class Mul extends Expression {
  * Class representing the division of two expressions.
  */
 class Div extends Expression {
-    private final Expression left, right;
+    private final Expression left;
+    private final Expression right;
 
     public Div(Expression left, Expression right) {
         this.left = left;
