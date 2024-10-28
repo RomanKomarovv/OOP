@@ -13,7 +13,6 @@ class GraphAdjListTest {
 
     static GraphAdjList mtx = new GraphAdjList();
 
-
     @BeforeEach
     void need() {
         mtx = new GraphAdjList();
@@ -27,7 +26,6 @@ class GraphAdjListTest {
         mtx.addEdge(1, 2);
         mtx.addVertex(5);
         assertEquals(mtx.toString(), "{1=[2], 2=[], 3=[], 5=[]}");
-
     }
 
     @Test
@@ -94,7 +92,6 @@ class GraphAdjListTest {
         List<Integer> with = mtx.getNeighbors(1);
 
         assertEquals(compared, with);
-
     }
 
     @Test
@@ -110,7 +107,6 @@ class GraphAdjListTest {
         mtx.addEdge(2, 3);
 
         Map<Integer, List<Integer>> allEdges = mtx.allEdges();
-
 
         assertEquals(allEdges.toString(), "{1=[2, 3], 2=[3], 3=[], 4=[]}");
     }
@@ -149,7 +145,6 @@ class GraphAdjListTest {
         newMtx.addEdge(3, 1);
 
         mtx.addEdge(3, 1);
-
 
         assertEquals(mtx, newMtx);
     }
