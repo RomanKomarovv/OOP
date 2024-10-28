@@ -230,7 +230,6 @@ public class GraphAdjMtx implements GraphInterface {
                 }
             }
         }
-
         status.put(vertex, 2);
         stack.push(vertex);
         return false;

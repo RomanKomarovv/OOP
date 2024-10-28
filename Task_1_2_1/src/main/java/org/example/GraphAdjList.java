@@ -50,7 +50,7 @@ public class GraphAdjList implements GraphInterface {
      * Добавляет ребро.
      *
      * @param from - откуда.
-     * @param to   - куда.
+     * @param to - куда.
      */
     @Override
     public void addEdge(int from, int to) {
@@ -217,5 +217,4 @@ public class GraphAdjList implements GraphInterface {
         stack.push(vertex);
         return false;
     }
-
 }

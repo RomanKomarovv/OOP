@@ -17,7 +17,6 @@ class GraphAdjMtxTest {
         assertThrows(IllegalArgumentException.class, () -> new GraphAdjMtx(0));
     }
 
-    //проверка скопировался ли массив
     @Test
     void addVertex2() {
         mtx.addEdge(1, 2);
