@@ -31,7 +31,9 @@ public class SequentialSolution {
      */
     public static boolean containsNonPrime(int[] arr) {
         for (int num : arr) {
-            if (isNotPrime(num)) return true;
+            if (isNotPrime(num)) {
+                return true;
+            }
         }
         return false;
     }
