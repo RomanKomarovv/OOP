@@ -3,7 +3,7 @@ package org.example;
 import java.util.Arrays;
 
 /**
- * A class that checks if an array contains any non-prime numbers using parallel streams.
+ * Test of Parallel Stream Solution
  */
 public class ParallelStreamSolution {
 

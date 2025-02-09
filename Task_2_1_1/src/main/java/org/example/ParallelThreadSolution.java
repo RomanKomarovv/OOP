@@ -60,7 +60,8 @@ public class ParallelThreadSolution {
         }
 
         executor.shutdown();
-        while (!executor.isTerminated()) {}
+        while (!executor.isTerminated()) {
+        }
 
         for (boolean res : results) {
             if (res) {
