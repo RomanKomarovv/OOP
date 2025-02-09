@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class ParallelStreamSolution {
 
     /**
-     * Checks if a given number is not prime.
+     * Checks if a given number is non prime.
      *
      * @param num the number to check
      * @return true if the number is not prime, false otherwise

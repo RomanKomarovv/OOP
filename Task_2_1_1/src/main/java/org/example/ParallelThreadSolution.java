@@ -3,6 +3,7 @@ package org.example;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+
 /**
  * A class that checks if an array contains any non-prime numbers using parallel threads.
  */
