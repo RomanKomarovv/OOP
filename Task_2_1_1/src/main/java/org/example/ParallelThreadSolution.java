@@ -4,12 +4,16 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ParallelThreadSolution {
-    private static final int THREAD_COUNT = 4; // Количество потоков
+    private static final int THREAD_COUNT = 6; // Количество потоков
 
     public static boolean isNotPrime(int num) {
-        if (num <= 1) return true;
+        if (num <= 1) {
+            return true;
+        }
         for (int i = 2; i <= Math.sqrt(num); i++) {
-            if (num % i == 0) return true;
+            if (num % i == 0) {
+                return true;
+            }
         }
         return false;
     }
@@ -39,17 +43,10 @@ public class ParallelThreadSolution {
         while (!executor.isTerminated()) {}
 
         for (boolean res : results) {
-            if (res) return true;
+            if (res) {
+                return true;
+            }
         }
         return false;
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        int[] data = {6, 8, 7, 13, 5, 9, 4};
-        long startTime = System.nanoTime();
-        boolean result = containsNonPrime(data);
-        long endTime = System.nanoTime();
-        System.out.println("Parallel Thread Result: " + result);
-        System.out.println("Time taken: " + (endTime - startTime) + " ns");
     }
 }
