@@ -3,9 +3,22 @@ package org.example;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * A class that checks if an array contains any non-prime numbers using parallel threads.
+ */
 public class ParallelThreadSolution {
-    private static final int THREAD_COUNT = 6; // Количество потоков
 
+    /**
+     * The number of threads used for parallel execution.
+     */
+    private static final int THREAD_COUNT = 6;
+
+    /**
+     * Checks if a given number is not prime.
+     *
+     * @param num the number to check
+     * @return true if the number is not prime, false otherwise
+     */
     public static boolean isNotPrime(int num) {
         if (num <= 1) {
             return true;
@@ -18,6 +31,13 @@ public class ParallelThreadSolution {
         return false;
     }
 
+    /**
+     * Determines if the array contains at least one non-prime number using parallel threads.
+     *
+     * @param arr the array of integers to check
+     * @return true if the array contains a non-prime number, false otherwise
+     * @throws InterruptedException if the thread is interrupted during execution
+     */
     public static boolean containsNonPrime(int[] arr) throws InterruptedException {
         ExecutorService executor = Executors.newFixedThreadPool(THREAD_COUNT);
         boolean[] results = new boolean[THREAD_COUNT];
